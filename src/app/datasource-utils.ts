@@ -6,7 +6,9 @@ import { Observable, map, concat, defer, of, combineLatest } from "rxjs";
 export class SimpleDataSource<T> extends DataSource<T> {
     constructor(private rows$: Observable<T[]>) {super(); }
     connect(collectionViewer: CollectionViewer): Observable<T[]> { return this.rows$; }
-    disconnect(collectionViewer: CollectionViewer): void {}
+    disconnect(collectionViewer: CollectionViewer): void {
+         /* TODO document why this method 'disconnect' is empty */ 
+          /* TODO document why this method 'disconnect' is empty */ }
   }
   
   function defaultSort(a: any, b: any): number {
@@ -84,40 +86,7 @@ export class SimpleDataSource<T> extends DataSource<T> {
       }
     );
   }
-  
-  /* TODO: handle ngIf'd MatPager controls.
-  
-  function isEqualPageEvents(a: PageEvent, b: PageEvent) {
-    return a.length === b.length
-      && a.pageSize === b.pageSize
-      && a.pageIndex === b.pageIndex;
-  
-  }
-  
-  
-  export function fromMatPaginators(pagers: QueryList<MatPaginator>): Observable<PageEvent> {
-    return pagers.changes.pipe(
-      startWith(pagers),
-      switchMap(_ =>
-        merge(...pagers.map(p => fromMatPaginator(p))).pipe(
-          distinctUntilChanged(isEqualPageEvents),
-          tap(page => pagers.forEach(pager => {
-            if (pager.pageIndex !== page.pageIndex) {
-              pager.pageIndex = page.pageIndex;
-            }
-            if (pager.pageSize !== page.pageSize) {
-              pager.pageSize = page.pageSize;
-            }
-            if (pager.length !== page.length) {
-              pager.length = page.length;
-            }
-          }))
-        )
-      ),
-      distinctUntilChanged(isEqualPageEvents),
-    );
-  }
-   */
+
   
   /** Creates an Observable stream of PageEvent objects from a MatPaginator component */
   export function fromMatPaginator(pager: MatPaginator): Observable<PageEvent> {
